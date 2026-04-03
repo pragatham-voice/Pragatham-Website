@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pragatham — Every Voice Deserves to Be Heard</title>
+  <meta name="description" content="Pragatham is a nonprofit dedicated to speech accessibility — providing resources, community, and tools for people who stutter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ────────────────────────────────────────────── */
+    :root {
+      --navy:   #1e3a5f;
+      --navy2:  #162d4a;
+      --gold:   #d4b84a;
+      --teal:   #3dbdb0;
+      --teal-l: #62d5c9;
+      --white:  #ffffff;
+      --off:    #f8f7f4;
+      --text:   #1a1a2e;
+      --muted:  #5a6a7a;
+      --border: #e2e8f0;
+      --r:      14px;
+      --r-lg:   24px;
+      --shadow: 0 4px 24px rgba(30,58,95,.10);
+      --shadow-lg: 0 12px 48px rgba(30,58,95,.18);
+    }
+
+    /* ── RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── LAYOUT ────────────────────────────────────────────── */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+    section { padding: 96px 0; }
+
+    /* ── TYPOGRAPHY ────────────────────────────────────────── */
+    .display {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -.02em;
+    }
+    .section-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.18;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+    p { margin-bottom: 1rem; }
+
+    /* ── BUTTONS ───────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .22s ease;
+      border: 2px solid transparent;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: var(--teal-l); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(61,189,176,.35); }
+    .btn-outline {
+      background: transparent;
+      border-color: rgba(255,255,255,.5);
+      color: var(--white);
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.1); }
+    .btn-navy {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .btn-navy:hover { background: var(--navy2); transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--navy);
+      color: var(--navy);
+    }
+    .btn-ghost:hover { background: var(--navy); color: var(--white); }
+
+    /* ── NAV ───────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 28px;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .2s;
+    }
+    nav.scrolled { box-shadow: var(--shadow); }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .92rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-cta .btn { padding: 9px 22px; font-size: .88rem; }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all .2s; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 28px 24px;
+      z-index: 99;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: 12px 0; font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--border); }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .btn { margin-top: 16px; width: 100%; justify-content: center; }
+
+    /* ── HERO ──────────────────────────────────────────────── */
+    #hero {
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #1a4a6b 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -40%; right: -20%;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(61,189,176,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%; left: -10%;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,184,74,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding: 120px 28px 80px;
+      max-width: 1120px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      color: var(--teal-l);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before { content: '●'; font-size: .5rem; }
+    .hero-title {
+      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      color: var(--white);
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,.72);
+      max-width: 560px;
+      line-height: 1.72;
+      margin-bottom: 40px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 72px; }
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .hero-stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .hero-stat-label {
+      font-size: .82rem;
+      color: rgba(255,255,255,.55);
+      font-weight: 500;
+      max-width: 120px;
+    }
+
+    /* ── ABOUT ─────────────────────────────────────────────── */
+    #about { background: var(--off); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .about-meaning {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--teal), var(--teal-l));
+      color: var(--white);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .about-body p { color: var(--muted); font-size: 1rem; line-height: 1.75; }
+    .founder-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 32px;
+      padding: 16px 20px;
+      background: var(--white);
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .founder-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .founder-name { font-weight: 600; font-size: .95rem; color: var(--navy); }
+    .founder-title-text { font-size: .82rem; color: var(--muted); }
+    .about-visual {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a4a6b 100%);
+      border-radius: var(--r-lg);
+      padding: 48px 40px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-visual::before {
+      content: '';
+      position: absolute;
+      top: -30%; right: -20%;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(61,189,176,.2) 0%, transparent 70%);
+    }
+    .about-visual-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: rgba(255,255,255,.08);
+      line-height: 1;
+      margin-bottom: -20px;
+    }
+    .about-visual-stat { margin-bottom: 32px; }
+    .about-visual-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .about-visual-lbl {
+      font-size: .9rem;
+      color: rgba(255,255,255,.65);
+      margin-top: 4px;
+    }
+    .about-visual-quote {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: rgba(255,255,255,.8);
+      line-height: 1.65;
+      border-left: 3px solid var(--teal);
+      padding-left: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── MISSION ───────────────────────────────────────────── */
+    #mission { background: var(--white); }
+    .mission-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+    .mission-statement {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+      color: var(--navy);
+      line-height: 1.5;
+      font-weight: 700;
+    }
+    .mission-desc { color: var(--muted); font-size: 1rem; line-height: 1.75; }
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .pillar {
+      background: var(--off);
+      border-radius: var(--r-lg);
+      padding: 36px 28px;
+      border: 1px solid var(--border);
+      transition: all .25s ease;
+    }
+    .pillar:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--teal); }
+    .pillar-icon { font-size: 2rem; margin-bottom: 16px; }
+    .pillar-title { font-weight: 700; font-size: 1.05rem; color: var(--navy); margin-bottom: 10px; }
+    .pillar-desc { color: var(--muted); font-size: .92rem; line-height: 1.65; }
+
+    /* ── RESOURCES ─────────────────────────────────────────── */
+    #resources { background: var(--off); }
+    .resources-header { margin-bottom: 52px; }
+    .resource-categories { display: flex; flex-direction: column; gap: 40px; }
+    .resource-cat-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .resource-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all .22s ease;
+      cursor: pointer;
+    }
+    .resource-card:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: var(--shadow); }
+    .resource-name {
+      font-weight: 600;
+      color: var(--navy);
+      font-size: .97rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .resource-name svg { flex-shrink: 0; color: var(--teal); opacity: 0; transition: opacity .2s; }
+    .resource-card:hover .resource-name svg { opacity: 1; }
+    .resource-desc { font-size: .85rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── BOOK ──────────────────────────────────────────────── */
+    #book {
+      background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #book::before {
+      content: '';
+      position: absolute;
+      top: -30%; right: -10%;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,184,74,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .book-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 72px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .book-cover {
+      width: 200px;
+      height: 280px;
+      background: linear-gradient(135deg, #c8a82a 0%, var(--gold) 50%, #b8982a 100%);
+      border-radius: 4px 12px 12px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: -8px 8px 32px rgba(0,0,0,.4), 4px 0 0 #9a7a20;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .book-cover-inner {
+      text-align: center;
+      padding: 24px;
+      color: var(--navy);
+    }
+    .book-cover-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .book-cover-author {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      opacity: .7;
+    }
+    .book-cover-line {
+      width: 40px; height: 2px;
+      background: var(--navy);
+      margin: 10px auto;
+      opacity: .4;
+    }
+    .book-content .section-label { color: var(--teal-l); }
+    .book-content .section-heading { color: var(--white); }
+    .book-content .section-sub { color: rgba(255,255,255,.65); max-width: 520px; margin-bottom: 24px; }
+    .book-quote {
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin: 28px 0;
+      background: rgba(255,255,255,.05);
+      border-radius: 0 var(--r) var(--r) 0;
+    }
+    .book-quote p {
+      font-style: italic;
+      color: rgba(255,255,255,.82);
+      font-size: 1.05rem;
+      line-height: 1.65;
+      margin: 0;
+    }
+    .book-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+
+    /* ── CONTACT ───────────────────────────────────────────── */
+    #contact { background: var(--white); }
+    .contact-header { text-align: center; margin-bottom: 60px; }
+    .contact-header .section-sub { margin: 0 auto; }
+    .contact-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .contact-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 40px 32px;
+      text-align: center;
+      transition: all .25s ease;
+    }
+    .contact-card:hover { border-color: var(--teal); transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .contact-icon { font-size: 2.4rem; margin-bottom: 16px; }
+    .contact-title { font-weight: 700; font-size: 1.1rem; color: var(--navy); margin-bottom: 10px; }
+    .contact-desc { font-size: .9rem; color: var(--muted); line-height: 1.65; margin-bottom: 24px; }
+
+    /* ── FOOTER ────────────────────────────────────────────── */
+    footer {
+      background: var(--navy2);
+      padding: 48px 28px;
+      text-align: center;
+    }
+    .footer-logo { height: 36px; margin: 0 auto 16px; filter: brightness(0) invert(1); }
+    .footer-tagline { color: rgba(255,255,255,.5); font-size: .9rem; margin-bottom: 8px; }
+    .footer-legal { color: rgba(255,255,255,.3); font-size: .78rem; }
+
+    /* ── DIVIDER ───────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────────────── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid, .mission-top, .book-grid { grid-template-columns: 1fr; gap: 40px; }
+      .pillars, .contact-options { grid-template-columns: 1fr 1fr; }
+      .book-cover { width: 160px; height: 224px; margin: 0 auto; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 64px 0; }
+      .pillars, .contact-options { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <img src="public/logo.png" alt="Pragatham" />
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <!-- populated by JS -->
+    </ul>
+    <div class="nav-cta" id="navCta"></div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu"></div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Nonprofit · Speech Accessibility</div>
+    <h1 class="display hero-title" id="heroTitle"></h1>
+    <p class="hero-sub" id="heroSub"></p>
+    <div class="hero-actions" id="heroActions"></div>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-body fade-in">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-heading" id="aboutHeading"></h2>
+        <span class="about-meaning" id="aboutMeaning"></span>
+        <div id="aboutParagraphs"></div>
+        <div class="founder-card">
+          <div class="founder-avatar" id="founderAvatar"></div>
+          <div>
+            <div class="founder-name" id="founderName"></div>
+            <div class="founder-title-text" id="founderTitle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual fade-in">
+        <div class="about-visual-number">70M</div>
+        <div class="about-visual-stat">
+          <div class="about-visual-val">70 Million</div>
+          <div class="about-visual-lbl">People worldwide who stutter</div>
+        </div>
+        <div class="about-visual-quote">
+          "The moment I stopped fighting my stutter and started singing through it — everything changed."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MISSION ── -->
+<section id="mission">
+  <div class="container">
+    <div class="mission-top fade-in">
+      <div>
+        <div class="section-label">What We Stand For</div>
+        <h2 class="section-heading" id="missionHeading"></h2>
+      </div>
+      <div>
+        <p class="mission-statement" id="missionStatement"></p>
+      </div>
+    </div>
+    <div class="pillars" id="pillars"></div>
+  </div>
+</section>
+
+<!-- ── RESOURCES ── -->
+<section id="resources">
+  <div class="container">
+    <div class="resources-header fade-in">
+      <div class="section-label">Free For Everyone</div>
+      <h2 class="section-heading" id="resourcesHeading"></h2>
+      <p class="section-sub" id="resourcesSub"></p>
+    </div>
+    <div class="resource-categories" id="resourceCategories"></div>
+  </div>
+</section>
+
+<!-- ── BOOK ── -->
+<section id="book">
+  <div class="container">
+    <div class="book-grid">
+      <div class="book-cover fade-in">
+        <div class="book-cover-inner">
+          <div class="book-cover-title" id="bookCoverTitle"></div>
+          <div class="book-cover-line"></div>
+          <div class="book-cover-author" id="bookCoverAuthor"></div>
+        </div>
+      </div>
+      <div class="book-content fade-in">
+        <div class="section-label">The Book</div>
+        <h2 class="section-heading" id="bookHeading"></h2>
+        <p class="section-sub" id="bookSub"></p>
+        <p class="section-sub" id="bookDesc" style="margin-top:12px;"></p>
+        <div class="book-quote">
+          <p id="bookQuote"></p>
+        </div>
+        <div class="book-actions" id="bookActions"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-header fade-in">
+      <div class="section-label">Join Us</div>
+      <h2 class="section-heading" id="contactHeading"></h2>
+      <p class="section-sub" id="contactSub"></p>
+    </div>
+    <div class="contact-options" id="contactOptions"></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <img src="public/logo.png" alt="Pragatham" class="footer-logo" />
+  <p class="footer-tagline" id="footerTagline"></p>
+  <p class="footer-legal" id="footerLegal"></p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CONTENT  — import your content.js here if using a bundler,
+     or paste the CONTENT object directly below for a plain HTML deploy
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+// ── PASTE YOUR CONTENT HERE (mirrors content.js) ──────────
+const CONTENT = {
+  nav: {
+    links: [
+      { label: "About",     href: "#about"     },
+      { label: "Mission",   href: "#mission"   },
+      { label: "Resources", href: "#resources" },
+      { label: "Book",      href: "#book"      },
+      { label: "Contact",   href: "#contact"   },
+    ],
+    ctaLabel: "Get Involved",
+    ctaHref:  "#contact",
+  },
+  hero: {
+    tagline:   "Every Voice Deserves to Be <em>Heard</em>",
+    subtitle:  "Pragatham is a nonprofit dedicated to speech accessibility — providing resources, community, and tools for people who stutter and their families.",
+    cta1Label: "Explore Resources",
+    cta1Href:  "#resources",
+    cta2Label: "Our Story",
+    cta2Href:  "#about",
+    stats: [
+      { value: "1 in 100", label: "Adults who stutter worldwide" },
+      { value: "70M+",     label: "People affected globally"     },
+      { value: "~1%",      label: "Who receive adequate support" },
+    ],
+  },
+  about: {
+    heading: "About Pragatham",
+    meaningLabel: '"Pragatham" — progress in Sanskrit.',
+    paragraphs: [
+      "Pragatham was founded by Saket Kulkarni, a high school student who overcame stuttering through years of perseverance and a self-developed methodology called the Song Technique.",
+      "After publishing his experience in Silence to Song, Saket recognized a gap: millions of people who stutter lack access to structured resources, community, or guidance. Pragatham exists to close that gap.",
+      "We believe speech accessibility is a civil right — not a luxury. Our work spans digital tools, curated resources, and advocacy to ensure every person finds their voice.",
+    ],
+    founderName:  "Saket Kulkarni",
+    founderTitle: "Founder, Pragatham",
+  },
+  mission: {
+    heading: "Our Mission",
+    statement: "To make speech accessibility resources available to every person who stutters — regardless of geography, income, or background.",
+    pillars: [
+      { icon: "🎯", title: "Accessible Resources", desc: "Curating the best tools, therapists, and research in one place — free for everyone." },
+      { icon: "🤝", title: "Community",            desc: "Connecting people who stutter with peers, mentors, and advocates who understand the journey." },
+      { icon: "📣", title: "Advocacy",             desc: "Raising awareness in schools, workplaces, and policy spaces to reduce stigma and increase support." },
+    ],
+  },
+  resources: {
+    heading: "Resources",
+    subtitle: "Carefully selected resources for people who stutter, their families, and educators.",
+    items: [
+      {
+        category: "Organizations",
+        links: [
+          { name: "National Stuttering Association",   url: "https://www.westutter.org",           desc: "Support groups, events, and advocacy for adults and children." },
+          { name: "Stuttering Foundation",             url: "https://www.stutteringhelp.org",      desc: "Free resources, videos, and therapist directories." },
+          { name: "American Institute for Stuttering", url: "https://stutteringtreatment.org",     desc: "Evidence-based stuttering therapy programs." },
+        ],
+      },
+      {
+        category: "For Students & Families",
+        links: [
+          { name: "Friends: The National Association", url: "https://www.friendswhostutter.org",       desc: "Youth-focused community and summer camps." },
+          { name: "Stuttering Help (Kids)",            url: "https://www.stutteringhelp.org/children", desc: "Age-appropriate guides for children and parents." },
+        ],
+      },
+      {
+        category: "Tools & Apps",
+        links: [
+          { name: "SpeechEasy",    url: "https://www.speecheasy.com",    desc: "Altered auditory feedback device to reduce stuttering." },
+          { name: "DAF Assistant", url: "https://apps.apple.com/us/app/daf-assistant/id1134579978", desc: "Delayed auditory feedback app for iOS." },
+        ],
+      },
+      {
+        category: "Research & Reading",
+        links: [
+          { name: "Journal of Fluency Disorders", url: "https://www.journals.elsevier.com/journal-of-fluency-disorders", desc: "Peer-reviewed research on stuttering science." },
+          { name: "StutterTalk Podcast",          url: "https://stuttertalk.com",                 desc: "Interviews with researchers, clinicians, and people who stutter." },
+        ],
+      },
+    ],
+  },
+  book: {
+    heading: "Silence to Song",
+    subtitle: "A memoir and methodology by Pragatham's founder.",
+    description: "Saket Kulkarni chronicles his journey from severe stuttering to competitive public speaking — and introduces the Song Technique, a practical methodology for reclaiming your voice. Part memoir, part guide, written for anyone who has ever felt silenced.",
+    buyLabel:   "Get the Book",
+    buyHref:    "https://amazon.com",
+    learnLabel: "Learn the Song Technique",
+    learnHref:  "#contact",
+    pullQuote:  "The moment I stopped fighting my stutter and started singing through it — everything changed.",
+  },
+  contact: {
+    heading: "Get Involved",
+    subtitle: "Whether you stutter, love someone who does, or want to support our mission — there is a place for you here.",
+    options: [
+      { icon: "✉️", title: "Reach Out",   desc: "Questions, partnerships, speaking requests — we read everything.", actionLabel: "Email Us",           actionHref: "mailto:pragatham.org@gmail.com" },
+      { icon: "🤲", title: "Volunteer",   desc: "Help us build resources, run social media, or support events.",    actionLabel: "Apply to Volunteer", actionHref: "mailto:pragatham.org@gmail.com?subject=Volunteer%20Interest" },
+      { icon: "💛", title: "Donate",      desc: "Every dollar goes directly toward expanding free resources.",      actionLabel: "Support Pragatham",  actionHref: "#" },
+    ],
+  },
+  footer: {
+    tagline:   "Pragatham — Every Voice Deserves to Be Heard.",
+    legalNote: "Pragatham is a registered nonprofit. All resources are free.",
+    year:      2025,
+  },
+};
+
+// ── RENDER ─────────────────────────────────────────────────
+function $(id) { return document.getElementById(id); }
+function el(tag, cls, html) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+// Nav
+const navUl = $('navLinks');
+CONTENT.nav.links.forEach(l => {
+  const li = el('li');
+  const a = el('a', '', l.label);
+  a.href = l.href;
+  li.appendChild(a);
+  navUl.appendChild(li);
+});
+$('navCta').innerHTML = `<a href="${CONTENT.nav.ctaHref}" class="btn btn-primary">${CONTENT.nav.ctaLabel}</a>`;
+
+// Mobile menu
+const mm = $('mobileMenu');
+CONTENT.nav.links.forEach(l => {
+  const a = el('a', '', l.label);
+  a.href = l.href;
+  a.onclick = () => mm.classList.remove('open');
+  mm.appendChild(a);
+});
+const mmBtn = el('a', 'btn btn-primary', CONTENT.nav.ctaLabel);
+mmBtn.href = CONTENT.nav.ctaHref;
+mmBtn.onclick = () => mm.classList.remove('open');
+mm.appendChild(mmBtn);
+
+function toggleMenu() {
+  mm.classList.toggle('open');
+}
+
+// Hero
+$('heroTitle').innerHTML = CONTENT.hero.tagline;
+$('heroSub').textContent = CONTENT.hero.subtitle;
+$('heroActions').innerHTML = `
+  <a href="${CONTENT.hero.cta1Href}" class="btn btn-primary">${CONTENT.hero.cta1Label}</a>
+  <a href="${CONTENT.hero.cta2Href}" class="btn btn-outline">${CONTENT.hero.cta2Label}</a>`;
+CONTENT.hero.stats.forEach(s => {
+  const d = el('div', 'hero-stat');
+  d.innerHTML = `<div class="hero-stat-value">${s.value}</div><div class="hero-stat-label">${s.label}</div>`;
+  $('heroStats').appendChild(d);
+});
+
+// About
+$('aboutHeading').textContent = CONTENT.about.heading;
+$('aboutMeaning').textContent = CONTENT.about.meaningLabel;
+const ap = $('aboutParagraphs');
+CONTENT.about.paragraphs.forEach(t => ap.appendChild(el('p', '', t)));
+$('founderAvatar').textContent = CONTENT.about.founderName[0];
+$('founderName').textContent   = CONTENT.about.founderName;
+$('founderTitle').textContent  = CONTENT.about.founderTitle;
+
+// Mission
+$('missionHeading').textContent  = CONTENT.mission.heading;
+$('missionStatement').textContent = CONTENT.mission.statement;
+const pillarsEl = $('pillars');
+CONTENT.mission.pillars.forEach(p => {
+  pillarsEl.appendChild(el('div', 'pillar fade-in', `
+    <div class="pillar-icon">${p.icon}</div>
+    <div class="pillar-title">${p.title}</div>
+    <div class="pillar-desc">${p.desc}</div>`));
+});
+
+// Resources
+$('resourcesHeading').textContent = CONTENT.resources.heading;
+$('resourcesSub').textContent     = CONTENT.resources.subtitle;
+const rc = $('resourceCategories');
+CONTENT.resources.items.forEach(cat => {
+  const wrap = el('div', 'fade-in');
+  wrap.appendChild(el('div', 'resource-cat-label', cat.category));
+  const grid = el('div', 'resource-grid');
+  cat.links.forEach(lnk => {
+    const card = el('a', 'resource-card');
+    card.href   = lnk.url;
+    card.target = '_blank';
+    card.rel    = 'noopener noreferrer';
+    card.innerHTML = `
+      <div class="resource-name">
+        ${lnk.name}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </div>
+      <div class="resource-desc">${lnk.desc}</div>`;
+    grid.appendChild(card);
+  });
+  wrap.appendChild(grid);
+  rc.appendChild(wrap);
+});
+
+// Book
+$('bookCoverTitle').textContent  = CONTENT.book.heading;
+$('bookCoverAuthor').textContent = CONTENT.about.founderName;
+$('bookHeading').textContent     = CONTENT.book.heading;
+$('bookSub').textContent         = CONTENT.book.subtitle;
+$('bookDesc').textContent        = CONTENT.book.description;
+$('bookQuote').textContent       = CONTENT.book.pullQuote;
+$('bookActions').innerHTML = `
+  <a href="${CONTENT.book.buyHref}"   class="btn btn-primary">${CONTENT.book.buyLabel}</a>
+  <a href="${CONTENT.book.learnHref}" class="btn btn-outline">${CONTENT.book.learnLabel}</a>`;
+
+// Contact
+$('contactHeading').textContent = CONTENT.contact.heading;
+$('contactSub').textContent     = CONTENT.contact.subtitle;
+const co = $('contactOptions');
+CONTENT.contact.options.forEach(opt => {
+  co.appendChild(el('div', 'contact-card fade-in', `
+    <div class="contact-icon">${opt.icon}</div>
+    <div class="contact-title">${opt.title}</div>
+    <div class="contact-desc">${opt.desc}</div>
+    <a href="${opt.actionHref}" class="btn btn-navy">${opt.actionLabel}</a>`));
+});
+
+// Footer
+$('footerTagline').textContent = CONTENT.footer.tagline;
+$('footerLegal').textContent   = `© ${CONTENT.footer.year} ${CONTENT.footer.legalNote}`;
+
+// ── SCROLL EFFECTS ──────────────────────────────────────────
+const navbar = $('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
