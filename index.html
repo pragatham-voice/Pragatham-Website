@@ -452,34 +452,8 @@
       position: relative;
       z-index: 1;
     }
-   .book-cover {
-  flex-shrink: 0;
-}
-    }
-    .book-cover-inner {
-      text-align: center;
-      padding: 24px;
-      color: var(--navy);
-    }
-    .book-cover-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .book-cover-author {
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      opacity: .7;
-    }
-    .book-cover-line {
-      width: 40px; height: 2px;
-      background: var(--navy);
-      margin: 10px auto;
-      opacity: .4;
+    .book-cover {
+      flex-shrink: 0;
     }
     .book-content .section-label { color: var(--teal-l); }
     .book-content .section-heading { color: var(--white); }
@@ -655,9 +629,9 @@
   <div class="container">
     <div class="book-grid">
       <div class="book-cover fade-in">
-        <img src="SilenceToSongCover.webp" alt="Silence to Song book cover" 
-             style="width:200px; height:280px; object-fit:cover; 
-                    border-radius:4px 12px 12px 4px; 
+        <img src="SilenceToSongCover.webp" alt="Silence to Song book cover"
+             style="width:200px; height:280px; object-fit:cover;
+                    border-radius:4px 12px 12px 4px;
                     box-shadow:-8px 8px 32px rgba(0,0,0,.4), 4px 0 0 #9a7a20;" />
       </div>
       <div class="book-content fade-in">
@@ -673,6 +647,7 @@
     </div>
   </div>
 </section>
+
 <!-- ── CONTACT ── -->
 <section id="contact">
   <div class="container">
@@ -758,7 +733,7 @@ const CONTENT = {
       {
         category: "Pragatham Video Archive",
         links: [
-          { name: "Interview With Dr. Larry Barnes",   url: "hhttps://www.youtube.com/watch?v=lpMWAgzCixk&t=1339s",           desc: "An interview between Saket and Dr. Larry Barnes, licensed speech therapist and pathologist with over two decades of experiences in schools and organizations." },
+          { name: "Interview With Dr. Larry Barnes",   url: "https://www.youtube.com/watch?v=lpMWAgzCixk&t=1339s",           desc: "An interview between Saket and Dr. Larry Barnes, licensed speech therapist and pathologist with over two decades of experiences in schools and organizations." },
         ],
       },
       {
@@ -904,12 +879,10 @@ CONTENT.resources.items.forEach(cat => {
 });
 
 // Book
-$('bookCoverTitle').textContent  = CONTENT.book.heading;
-$('bookCoverAuthor').textContent = CONTENT.about.founderName;
-$('bookHeading').textContent     = CONTENT.book.heading;
-$('bookSub').textContent         = CONTENT.book.subtitle;
-$('bookDesc').textContent        = CONTENT.book.description;
-$('bookQuote').textContent       = CONTENT.book.pullQuote;
+$('bookHeading').textContent = CONTENT.book.heading;
+$('bookSub').textContent     = CONTENT.book.subtitle;
+$('bookDesc').textContent    = CONTENT.book.description;
+$('bookQuote').textContent   = CONTENT.book.pullQuote;
 $('bookActions').innerHTML = `
   <a href="${CONTENT.book.buyHref}"   class="btn btn-primary">${CONTENT.book.buyLabel}</a>
   <a href="${CONTENT.book.learnHref}" class="btn btn-outline">${CONTENT.book.learnLabel}</a>`;
