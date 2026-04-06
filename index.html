@@ -452,18 +452,9 @@
       position: relative;
       z-index: 1;
     }
-    .book-cover {
-      width: 200px;
-      height: 280px;
-      background: linear-gradient(135deg, #c8a82a 0%, var(--gold) 50%, #b8982a 100%);
-      border-radius: 4px 12px 12px 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: -8px 8px 32px rgba(0,0,0,.4), 4px 0 0 #9a7a20;
-      flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
+   .book-cover {
+  flex-shrink: 0;
+}
     }
     .book-cover-inner {
       text-align: center;
@@ -664,11 +655,10 @@
   <div class="container">
     <div class="book-grid">
       <div class="book-cover fade-in">
-        <div class="book-cover-inner">
-          <div class="book-cover-title" id="bookCoverTitle"></div>
-          <div class="book-cover-line"></div>
-          <div class="book-cover-author" id="bookCoverAuthor"></div>
-        </div>
+        <img src="SilenceToSongCover.webp" alt="Silence to Song book cover" 
+             style="width:200px; height:280px; object-fit:cover; 
+                    border-radius:4px 12px 12px 4px; 
+                    box-shadow:-8px 8px 32px rgba(0,0,0,.4), 4px 0 0 #9a7a20;" />
       </div>
       <div class="book-content fade-in">
         <div class="section-label">The Book</div>
@@ -683,7 +673,6 @@
     </div>
   </div>
 </section>
-
 <!-- ── CONTACT ── -->
 <section id="contact">
   <div class="container">
