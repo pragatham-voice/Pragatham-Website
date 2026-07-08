@@ -149,6 +149,7 @@
       transition: color .15s;
     }
     .nav-links a:hover { color: var(--navy); }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
     .nav-cta .btn { padding: 9px 22px; font-size: .88rem; }
 
     /* hamburger */
@@ -162,11 +163,24 @@
       border-bottom: 1px solid var(--border);
       padding: 20px 28px 24px;
       z-index: 99;
+      max-height: calc(100vh - 68px);
+      overflow-y: auto;
     }
     .mobile-menu.open { display: block; }
     .mobile-menu a { display: block; padding: 12px 0; font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--border); }
     .mobile-menu a:last-child { border: none; }
     .mobile-menu .btn { margin-top: 16px; width: 100%; justify-content: center; }
+
+    /* ── INSTAGRAM ─────────────────────────────────────────── */
+    .ig-gradient {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+    .btn-instagram {
+      color: var(--white);
+    }
+    .btn-instagram:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(220,39,67,.35); filter: brightness(1.06); }
+    .btn-instagram svg { flex-shrink: 0; }
+    .mobile-menu .btn-instagram { margin-top: 0; margin-bottom: 4px; }
 
     /* ── HERO ──────────────────────────────────────────────── */
     #hero {
@@ -199,11 +213,18 @@
     .hero-inner {
       position: relative;
       z-index: 1;
-      padding: 120px 28px 80px;
+      padding: 132px 28px 80px;
       max-width: 1120px;
       margin: 0 auto;
       width: 100%;
     }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .hero-text-col { min-width: 0; }
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -221,17 +242,17 @@
     }
     .hero-badge::before { content: '●'; font-size: .5rem; }
     .hero-title {
-      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      font-size: clamp(2.4rem, 5.4vw, 4.4rem);
       color: var(--white);
       margin-bottom: 24px;
-      max-width: 800px;
+      max-width: 640px;
     }
     .hero-title em {
       font-style: italic;
       color: var(--gold);
     }
     .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-size: clamp(1rem, 2vw, 1.15rem);
       color: rgba(255,255,255,.72);
       max-width: 560px;
       line-height: 1.72;
@@ -258,6 +279,56 @@
       color: rgba(255,255,255,.55);
       font-weight: 500;
       max-width: 120px;
+    }
+
+    /* hero video / instagram feature */
+    .hero-video-col { display: flex; flex-direction: column; align-items: center; }
+    .hero-video-card {
+      width: 100%;
+      max-width: 380px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--r-lg);
+      padding: 20px 20px 24px;
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .hero-video-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal-l);
+      margin-bottom: 14px;
+    }
+    .hero-video-eyebrow::before { content: '▶'; font-size: .6rem; color: var(--gold); }
+    .hero-video-embed {
+      border-radius: var(--r);
+      overflow: hidden;
+      background: rgba(0,0,0,.25);
+      line-height: 0;
+    }
+    .hero-video-embed iframe {
+      display: block;
+      width: 100%;
+      height: 620px;
+      border: 0;
+    }
+    .hero-video-caption {
+      font-size: .88rem;
+      color: rgba(255,255,255,.65);
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+    .hero-follow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
     }
 
     /* ── ABOUT ─────────────────────────────────────────────── */
@@ -430,6 +501,72 @@
     .resource-card:hover .resource-name svg { opacity: 1; }
     .resource-desc { font-size: .85rem; color: var(--muted); line-height: 1.55; }
 
+    /* ── VIDEOS ────────────────────────────────────────────── */
+    #videos { background: var(--white); }
+    .videos-header { margin-bottom: 52px; }
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 32px;
+    }
+    .video-card {
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all .25s ease;
+    }
+    .video-card:hover { box-shadow: var(--shadow-lg); border-color: var(--teal); }
+    .video-embed-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background: var(--navy2);
+    }
+    .video-embed-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    .video-info { padding: 26px 28px 30px; }
+    .video-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(61,189,176,.12);
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+    .video-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .video-desc { font-size: .92rem; color: var(--muted); line-height: 1.7; margin-bottom: 0; }
+    .video-more-card {
+      border: 2px dashed var(--border);
+      border-radius: var(--r-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 48px 32px;
+      min-height: 260px;
+      color: var(--muted);
+    }
+    .video-more-card .video-more-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .video-more-card p { color: var(--muted); font-size: .92rem; max-width: 260px; margin: 0; }
+
     /* ── BOOK ──────────────────────────────────────────────── */
     #book {
       background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%);
@@ -476,7 +613,7 @@
     .book-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
 
     /* ── CONTACT ───────────────────────────────────────────── */
-    #contact { background: var(--white); }
+    #contact { background: var(--off); }
     .contact-header { text-align: center; margin-bottom: 60px; }
     .contact-header .section-sub { margin: 0 auto; }
     .contact-options {
@@ -490,6 +627,7 @@
       padding: 40px 32px;
       text-align: center;
       transition: all .25s ease;
+      background: var(--white);
     }
     .contact-card:hover { border-color: var(--teal); transform: translateY(-6px); box-shadow: var(--shadow-lg); }
     .contact-icon { font-size: 2.4rem; margin-bottom: 16px; }
@@ -504,6 +642,7 @@
     }
     .footer-logo { height: 36px; margin: 0 auto 16px; filter: brightness(0) invert(1); }
     .footer-tagline { color: rgba(255,255,255,.5); font-size: .9rem; margin-bottom: 8px; }
+    .footer-social { display: flex; justify-content: center; margin-bottom: 20px; }
     .footer-legal { color: rgba(255,255,255,.3); font-size: .78rem; }
 
     /* ── DIVIDER ───────────────────────────────────────────── */
@@ -528,11 +667,14 @@
       .book-cover { width: 160px; height: 224px; margin: 0 auto; }
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-inner { padding-top: 108px; }
     }
     @media (max-width: 600px) {
       section { padding: 64px 0; }
       .pillars, .contact-options { grid-template-columns: 1fr; }
       .hero-stats { gap: 28px; }
+      .videos-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -558,11 +700,23 @@
 <!-- ── HERO ── -->
 <section id="hero">
   <div class="hero-inner">
-    <div class="hero-badge">Breaking Barriers to Communication</div>
-    <h1 class="display hero-title" id="heroTitle"></h1>
-    <p class="hero-sub" id="heroSub"></p>
-    <div class="hero-actions" id="heroActions"></div>
-    <div class="hero-stats" id="heroStats"></div>
+    <div class="hero-grid">
+      <div class="hero-text-col">
+        <div class="hero-badge">Breaking Barriers to Communication</div>
+        <h1 class="display hero-title" id="heroTitle"></h1>
+        <p class="hero-sub" id="heroSub"></p>
+        <div class="hero-actions" id="heroActions"></div>
+        <div class="hero-stats" id="heroStats"></div>
+      </div>
+      <div class="hero-video-col">
+        <div class="hero-video-card">
+          <div class="hero-video-eyebrow" id="heroVideoEyebrow"></div>
+          <div class="hero-video-embed" id="heroVideoEmbed"></div>
+          <p class="hero-video-caption" id="heroVideoCaption"></p>
+          <div class="hero-follow-row" id="heroFollowRow"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -625,6 +779,18 @@
   </div>
 </section>
 
+<!-- ── VIDEOS ── -->
+<section id="videos">
+  <div class="container">
+    <div class="videos-header fade-in">
+      <div class="section-label">Watch &amp; Learn</div>
+      <h2 class="section-heading" id="videosHeading"></h2>
+      <p class="section-sub" id="videosSub"></p>
+    </div>
+    <div class="videos-grid" id="videosGrid"></div>
+  </div>
+</section>
+
 <!-- ── BOOK ── -->
 <section id="book">
   <div class="container">
@@ -664,6 +830,7 @@
 <!-- ── FOOTER ── -->
 <footer>
   <img src="Pragatham Logo (2).png" alt="Pragatham" class="footer-logo" />
+  <div class="footer-social" id="footerSocial"></div>
   <p class="footer-tagline" id="footerTagline"></p>
   <p class="footer-legal" id="footerLegal"></p>
 </footer>
@@ -675,11 +842,16 @@
 <script>
 // ── PASTE YOUR CONTENT HERE (mirrors content.js) ──────────
 const CONTENT = {
+  instagram: {
+    handle: "@pragatham.official",
+    url: "https://www.instagram.com/pragatham.official/",
+  },
   nav: {
     links: [
       { label: "About",     href: "#about"     },
       { label: "Mission",   href: "#mission"   },
       { label: "Resources", href: "#resources" },
+      { label: "Videos",    href: "#videos"    },
       { label: "Book",      href: "#book"      },
       { label: "Contact",   href: "#contact"   },
     ],
@@ -698,6 +870,12 @@ const CONTENT = {
       { value: "67%",      label: "Stutters who experience depression and suicidal ideation" },
       { value: "1%",       label: "Who receive adequate support" },
     ],
+    video: {
+      eyebrow: "Watch First",
+      instagramUrl: "https://www.instagram.com/p/DaiWrs8BdFM/",
+      caption: "Understanding the Method — the story behind the Song Technique, and how its discovery made everything else at Pragatham possible.",
+      followLabel: "Follow @pragatham.official",
+    },
   },
   about: {
     heading: "About Pragatham",
@@ -732,12 +910,6 @@ const CONTENT = {
         ],
       },
       {
-        category: "Pragatham Video Archive",
-        links: [
-          { name: "Interview With Dr. Larry Barnes",   url: "https://www.youtube.com/watch?v=lpMWAgzCixk&t=1339s",           desc: "An interview between Saket and Dr. Larry Barnes, licensed speech therapist and pathologist with over two decades of experiences in schools and organizations." },
-        ],
-      },
-      {
         category: "Pragatham Guides",
         links: [
           { name: "The Song Technique", url: "https://docs.google.com/document/d/1917siZjBH-QyqhLpZDJ-fx_rEMPpP6IdxEiWmWTR10A/edit?usp=sharing",       desc: "A deep dive into the Song Technique, a custom made strategy by Pragatham's founder with proven results." },
@@ -756,6 +928,18 @@ const CONTENT = {
           { name: "Journal of Fluency Disorders", url: "https://www.journals.elsevier.com/journal-of-fluency-disorders", desc: "Peer-reviewed research on stuttering science." },
           { name: "StutterTalk Podcast",          url: "https://stuttertalk.com",                 desc: "Interviews with researchers, clinicians, and people who stutter." },
         ],
+      },
+    ],
+  },
+  videos: {
+    heading: "Videos & Lessons",
+    subtitle: "Longer-form interviews, lessons, and lectures for anyone who wants to go deeper — this space will keep growing.",
+    items: [
+      {
+        tag: "Interview",
+        title: "Interview with Dr. Larry Barnes",
+        youtubeId: "lpMWAgzCixk",
+        description: "Saket sits down with Dr. Larry Barnes, a licensed speech therapist and pathologist with over two decades of experience working with schools and organizations, to unpack what actually helps people who stutter. This conversation matters because it grounds Pragatham's work in clinical expertise, not just personal experience — Dr. Barnes speaks to what the research and the classroom both show about building fluency, confidence, and support systems that last. If you're a parent, educator, or person who stutters trying to separate real guidance from myths, start here.",
       },
     ],
   },
@@ -785,6 +969,19 @@ const CONTENT = {
   },
 };
 
+// ── ICONS ──────────────────────────────────────────────────
+const IG_ICON = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`;
+
+function instagramButton(extraClass) {
+  const a = document.createElement('a');
+  a.href = CONTENT.instagram.url;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  a.className = `btn ig-gradient btn-instagram ${extraClass || ''}`.trim();
+  a.innerHTML = `${IG_ICON}<span>${CONTENT.instagram.handle}</span>`;
+  return a;
+}
+
 // ── RENDER ─────────────────────────────────────────────────
 function $(id) { return document.getElementById(id); }
 function el(tag, cls, html) {
@@ -803,10 +1000,17 @@ CONTENT.nav.links.forEach(l => {
   li.appendChild(a);
   navUl.appendChild(li);
 });
-$('navCta').innerHTML = `<a href="${CONTENT.nav.ctaHref}" class="btn btn-primary">${CONTENT.nav.ctaLabel}</a>`;
+const navCta = $('navCta');
+navCta.appendChild(instagramButton());
+navCta.insertAdjacentHTML('beforeend', `<a href="${CONTENT.nav.ctaHref}" class="btn btn-primary">${CONTENT.nav.ctaLabel}</a>`);
 
 // Mobile menu
 const mm = $('mobileMenu');
+const mmIg = instagramButton();
+mmIg.style.width = '100%';
+mmIg.style.justifyContent = 'center';
+mmIg.onclick = () => mm.classList.remove('open');
+mm.appendChild(mmIg);
 CONTENT.nav.links.forEach(l => {
   const a = el('a', '', l.label);
   a.href = l.href;
@@ -833,6 +1037,21 @@ CONTENT.hero.stats.forEach(s => {
   d.innerHTML = `<div class="hero-stat-value">${s.value}</div><div class="hero-stat-label">${s.label}</div>`;
   $('heroStats').appendChild(d);
 });
+
+// Hero video (Instagram reel embed — direct iframe, no external script needed)
+$('heroVideoEyebrow').textContent = CONTENT.hero.video.eyebrow;
+$('heroVideoEmbed').innerHTML = `
+  <iframe src="${CONTENT.hero.video.instagramUrl.replace(/\/?$/, '/')}embed"
+    title="${CONTENT.hero.video.eyebrow}"
+    loading="lazy"
+    scrolling="no"
+    allowtransparency="true"
+    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>`;
+$('heroVideoCaption').textContent = CONTENT.hero.video.caption;
+$('heroFollowRow').appendChild(instagramButton());
+$('heroFollowRow').querySelector('a span').textContent = CONTENT.hero.video.followLabel;
 
 // About
 $('aboutHeading').textContent = CONTENT.about.heading;
@@ -879,6 +1098,29 @@ CONTENT.resources.items.forEach(cat => {
   rc.appendChild(wrap);
 });
 
+// Videos
+$('videosHeading').textContent = CONTENT.videos.heading;
+$('videosSub').textContent     = CONTENT.videos.subtitle;
+const vg = $('videosGrid');
+CONTENT.videos.items.forEach(v => {
+  const card = el('div', 'video-card fade-in');
+  card.innerHTML = `
+    <div class="video-embed-wrap">
+      <iframe src="https://www.youtube.com/embed/${v.youtubeId}" title="${v.title}" loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-info">
+      <span class="video-tag">${v.tag}</span>
+      <div class="video-title">${v.title}</div>
+      <p class="video-desc">${v.description}</p>
+    </div>`;
+  vg.appendChild(card);
+});
+// Placeholder card hinting more lessons/lectures are coming
+vg.appendChild(el('div', 'video-more-card fade-in', `
+  <div class="video-more-icon">🎬</div>
+  <p>More lessons and lectures are on the way — check back soon.</p>`));
+
 // Book
 $('bookHeading').textContent = CONTENT.book.heading;
 $('bookSub').textContent     = CONTENT.book.subtitle;
@@ -901,6 +1143,7 @@ CONTENT.contact.options.forEach(opt => {
 });
 
 // Footer
+$('footerSocial').appendChild(instagramButton());
 $('footerTagline').textContent = CONTENT.footer.tagline;
 $('footerLegal').textContent   = `© ${CONTENT.footer.year} ${CONTENT.footer.legalNote}`;
 
