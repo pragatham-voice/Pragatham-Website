@@ -1,3 +1,4 @@
+cat > /home/claude/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,6 +114,11 @@
       color: var(--navy);
     }
     .btn-ghost:hover { background: var(--navy); color: var(--white); }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy2);
+    }
+    .btn-gold:hover { background: #e2c85f; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,184,74,.4); }
 
     /* ── NAV ───────────────────────────────────────────────── */
     nav {
@@ -461,6 +467,110 @@
     .pillar-title { font-weight: 700; font-size: 1.05rem; color: var(--navy); margin-bottom: 10px; }
     .pillar-desc { color: var(--muted); font-size: .92rem; line-height: 1.65; }
 
+    /* ── SCHOLARSHIP ───────────────────────────────────────── */
+    #scholarship {
+      background: linear-gradient(135deg, #fbf9f1 0%, var(--off) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    #scholarship::before {
+      content: '';
+      position: absolute;
+      top: -25%; left: -12%;
+      width: 460px; height: 460px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,184,74,.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .scholarship-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212,184,74,.14);
+      border: 1px solid rgba(212,184,74,.4);
+      color: #8a6d1a;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 18px;
+    }
+    .scholarship-badge::before { content: '★'; color: var(--gold); }
+    .scholarship-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+    .scholarship-info .section-sub { margin-bottom: 20px; }
+    .scholarship-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 28px 0 32px;
+    }
+    .scholarship-fact {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px 18px;
+    }
+    .scholarship-fact-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      line-height: 1.3;
+    }
+    .scholarship-fact-text { font-size: .92rem; color: var(--muted); line-height: 1.55; }
+    .scholarship-fact-text strong { color: var(--navy); }
+    .scholarship-form-wrap {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 8px;
+      box-shadow: var(--shadow-lg);
+    }
+    .scholarship-form-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .scholarship-form-header span {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: .95rem;
+    }
+    .scholarship-iframe-wrap {
+      position: relative;
+      width: 100%;
+      border-radius: 0 0 var(--r) var(--r);
+      overflow: hidden;
+    }
+    .scholarship-iframe-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 1900px;
+      border: 0;
+    }
+    .scholarship-form-note {
+      font-size: .8rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 14px 16px 4px;
+    }
+
     /* ── RESOURCES ─────────────────────────────────────────── */
     #resources { background: var(--off); }
     .resources-header { margin-bottom: 52px; }
@@ -664,7 +774,7 @@
 
     /* ── RESPONSIVE ────────────────────────────────────────── */
     @media (max-width: 900px) {
-      .about-grid, .mission-top, .book-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-grid, .mission-top, .book-grid, .scholarship-grid { grid-template-columns: 1fr; gap: 40px; }
       .pillars, .contact-options { grid-template-columns: 1fr 1fr; }
       .book-cover { width: 160px; height: 224px; margin: 0 auto; }
       .nav-links, .nav-cta { display: none; }
@@ -677,6 +787,7 @@
       .pillars, .contact-options { grid-template-columns: 1fr; }
       .hero-stats { gap: 28px; }
       .videos-grid { grid-template-columns: 1fr; }
+      .scholarship-iframe-wrap iframe { height: 2200px; }
     }
   </style>
 </head>
@@ -771,6 +882,30 @@
   </div>
 </section>
 
+<!-- ── SCHOLARSHIP ── -->
+<section id="scholarship">
+  <div class="container">
+    <div class="scholarship-grid">
+      <div class="scholarship-info fade-in">
+        <div class="scholarship-badge" id="scholarshipBadge"></div>
+        <h2 class="section-heading" id="scholarshipHeading"></h2>
+        <p class="section-sub" id="scholarshipSub"></p>
+        <div class="scholarship-facts" id="scholarshipFacts"></div>
+        <div class="book-actions" id="scholarshipActions"></div>
+      </div>
+      <div class="scholarship-form-wrap fade-in">
+        <div class="scholarship-form-header">
+          <span id="scholarshipFormLabel"></span>
+        </div>
+        <div class="scholarship-iframe-wrap">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSccBPiglrnbBobePZsLM2McjEbPjIg8Lt5vwZGkStSpoEDcxQ/viewform?embedded=true" width="100%" height="1900" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+        <p class="scholarship-form-note" id="scholarshipFormNote"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── RESOURCES ── -->
 <section id="resources">
   <div class="container">
@@ -852,12 +987,13 @@ const CONTENT = {
   },
   nav: {
     links: [
-      { label: "About",     href: "#about"     },
-      { label: "Mission",   href: "#mission"   },
-      { label: "Resources", href: "#resources" },
-      { label: "Videos",    href: "#videos"    },
-      { label: "Book",      href: "#book"      },
-      { label: "Contact",   href: "#contact"   },
+      { label: "About",       href: "#about"       },
+      { label: "Mission",     href: "#mission"     },
+      { label: "Scholarship", href: "#scholarship" },
+      { label: "Resources",   href: "#resources"   },
+      { label: "Videos",      href: "#videos"      },
+      { label: "Book",        href: "#book"        },
+      { label: "Contact",     href: "#contact"     },
     ],
     ctaLabel: "Get Involved",
     ctaHref:  "#contact",
@@ -900,6 +1036,23 @@ const CONTENT = {
       { icon: "🤝", title: "Community",            desc: "Connecting people who stutter with peers, mentors, and advocates who understand the journey." },
       { icon: "📣", title: "Advocacy",             desc: "Raising awareness in schools, workplaces, and policy spaces to reduce stigma and increase support." },
     ],
+  },
+  scholarship: {
+    badge: "Pragatham Program",
+    heading: "Speech Access Fund",
+    subtitle: "A scholarship fund covering a block of speech therapy sessions for North Texas students who face financial barriers to speech-language services — run in partnership with North Texas Medical Clinic and a network of SLP providers.",
+    facts: [
+      { icon: "🩺", html: "<strong>Need-based, not diagnosis-based.</strong> No proof of income or formal diagnosis required — just answer honestly." },
+      { icon: "📋", html: "<strong>Reviewed by professionals.</strong> A licensed speech-language pathologist and a North Texas Medical Clinic provider sit on the selection committee." },
+      { icon: "💳", html: "<strong>No out-of-pocket cost.</strong> Each award covers one session block (3–5 sessions), billed directly to Pragatham." },
+      { icon: "🔒", html: "<strong>Confidential.</strong> Applications are reviewed on a rolling basis; if funding is limited you'll be waitlisted and contacted as space opens." },
+    ],
+    contactLabel: "Questions? Email us",
+    contactHref:  "mailto:pragatham.voice@gmail.com",
+    formLabel: "Apply for the Speech Access Fund",
+    formNote:  "Having trouble with the embedded form? Open it directly in Google Forms.",
+    formDirectLabel: "Open Form Directly",
+    formDirectHref:  "https://docs.google.com/forms/d/e/1FAIpQLSccBPiglrnbBobePZsLM2McjEbPjIg8Lt5vwZGkStSpoEDcxQ/viewform",
   },
   resources: {
     heading: "Resources",
@@ -1077,6 +1230,22 @@ CONTENT.mission.pillars.forEach(p => {
     <div class="pillar-desc">${p.desc}</div>`));
 });
 
+// Scholarship
+$('scholarshipBadge').textContent   = CONTENT.scholarship.badge;
+$('scholarshipHeading').textContent = CONTENT.scholarship.heading;
+$('scholarshipSub').textContent     = CONTENT.scholarship.subtitle;
+const schFacts = $('scholarshipFacts');
+CONTENT.scholarship.facts.forEach(f => {
+  schFacts.appendChild(el('div', 'scholarship-fact', `
+    <div class="scholarship-fact-icon">${f.icon}</div>
+    <div class="scholarship-fact-text">${f.html}</div>`));
+});
+$('scholarshipActions').innerHTML = `
+  <a href="${CONTENT.scholarship.contactHref}" class="btn btn-gold">${CONTENT.scholarship.contactLabel}</a>
+  <a href="#scholarship" class="btn btn-ghost" onclick="document.querySelector('.scholarship-iframe-wrap iframe').scrollIntoView({behavior:'smooth'})">Apply Now</a>`;
+$('scholarshipFormLabel').textContent = CONTENT.scholarship.formLabel;
+$('scholarshipFormNote').innerHTML = `${CONTENT.scholarship.formNote} <a href="${CONTENT.scholarship.formDirectHref}" target="_blank" rel="noopener noreferrer" style="color:var(--teal); font-weight:600; text-decoration:underline;">${CONTENT.scholarship.formDirectLabel}</a>`;
+
 // Resources
 $('resourcesHeading').textContent = CONTENT.resources.heading;
 $('resourcesSub').textContent     = CONTENT.resources.subtitle;
@@ -1164,3 +1333,5 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
+HTMLEOF
+echo "written"
